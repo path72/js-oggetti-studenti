@@ -9,24 +9,24 @@ $(function() {
 displayInit();
 
 // user data
-var user = getUsrData();
+var usrData = getUsrData();
 
 // user data display
-usrDisplay(user);
+usrDisplay(usrData);
 
 // class data
-var studenti = getClassData();
+var classData = getClassData();
 
 // user data injection
-studenti.push(user);
+classData.push(usrData);
 
 // class display
-classDisplay(studenti);
+classDisplay(classData);
 
 // button functions
 $('#usr_add_btn').click(function()   { $('.form_box').fadeIn(200);  });
 $('#usr_erase_btn').click(function() { $('.form_box').fadeOut(200); });
-$('#usr_in_btn').click(function()    { addStudent(studenti);        });
+$('#usr_in_btn').click(function()    { formAddStudentTo(classData);  });
 
 
 // *********************** doc ready end ***
@@ -35,7 +35,7 @@ $('#usr_in_btn').click(function()    { addStudent(studenti);        });
 //###################################################### 
 // FUNCTIONS
 
-function addStudent(_studenti) {
+function formAddStudentTo(_class) {
 
 	// form data retrieving 
 	var usrName    = $('#usr_name').val();
@@ -44,12 +44,15 @@ function addStudent(_studenti) {
 
 	// consistency check
 	if ( usrName == '' || usrSurname == '' || isNaN(usrAge)) {
+
 		$('.msg').html('Dati non corretti');
 		$('.msg_box').fadeIn(200, function() {
 			setTimeout(function() {
 				$('.msg_box').fadeOut(200);
 			}, 1000);
 		});
+
+	// new student management
 	} else {
 
 		// new student creation
@@ -60,10 +63,10 @@ function addStudent(_studenti) {
 		};
 		
 		// new student injection 
-		_studenti.push(newStd);
+		_class.push(newStd);
 
 		// class update & display
-		classDisplay(_studenti);
+		classDisplay(_class);
 		$('.form_box').fadeOut(200);
 
 		// form clearing
@@ -75,19 +78,19 @@ function addStudent(_studenti) {
 
 }
 
-function usrDisplay(_user) {
+function usrDisplay(_student) {
 
-	for (var key in _user) {
-		$('.user').append('<tr><td class="hl1">'+key+'</td><td class="hl2">'+_user[key]+'</td></tr>');
+	for (var key in _student) {
+		$('.user').append('<tr><td class="hl1">'+key+'</td><td class="hl2">'+_student[key]+'</td></tr>');
 	}
 
 }
 
-function classDisplay(_studenti) {
+function classDisplay(_class) {
 
 	$('.list').html('<tr><td></td><td class="hl1">nome</td><td class="hl1">cognome</td>');
-	for (var i=0; i<_studenti.length; i++) {
-		$('.list').append('<tr><td class="hl1">studente #'+(i+1)+'</td><td class="hl2">'+_studenti[i]['nome']+'</td><td class="hl2">'+_studenti[i]['cognome']+'</td>');
+	for (var i=0; i<_class.length; i++) {
+		$('.list').append('<tr><td class="hl1">studente #'+(i+1)+'</td><td class="hl2">'+_class[i]['nome']+'</td><td class="hl2">'+_class[i]['cognome']+'</td>');
 	}
 	
 }
