@@ -42,6 +42,7 @@ body {
 	overflow: hidden;
 }
 
+
 /** INPUT FORM & WARNING **/
 .form_box,
 .msg_box {
@@ -78,7 +79,7 @@ body {
 	/* border: 1px solid red; */
 }
 
-/** DISPLAY **/
+/** DISPLAY STYLES **/
 .hl1 {
 	font-size: 0.8em;
 	font-style: italic;

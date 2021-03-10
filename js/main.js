@@ -5,7 +5,7 @@ $(function() {
 // ********************* doc ready start ***
 
 
-// display settings
+// initial display settings
 displayInit();
 
 // user data
@@ -24,9 +24,9 @@ classData.push(usrData);
 classDisplay(classData);
 
 // button functions
-$('#usr_add_btn').click(function()   { $('.form_box').fadeIn(200);  });
-$('#usr_erase_btn').click(function() { $('.form_box').fadeOut(200); });
-$('#usr_in_btn').click(function()    { formAddStudentTo(classData);  });
+$('#usr_add_btn').click(   function() { $('.form_box').fadeIn(200);  });
+$('#usr_erase_btn').click( function() { $('.form_box').fadeOut(200); });
+$('#usr_in_btn').click(    function() { formAddStudentTo(classData); });
 
 
 // *********************** doc ready end ***
