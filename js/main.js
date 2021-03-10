@@ -5,55 +5,28 @@ $(function() {
 // ********************* doc ready start ***
 
 
-var studente = {
-	'nome'    : 'Pierfrancesco',
-	'cognome' : 'Favino',
-	'età'     : 14
-}
+// display settings
+displayInit();
 
-for (key in studente) {
-	$('.user').append('<tr><td>'+key+'</td><td>'+studente[key]+'</td></tr>');
-}
+// user data
+var user = getUsrData();
 
-var studenti = [];
+// user data display
+usrDisplay(user);
 
-studenti[0] = {
-	'nome'    : 'Marco',
-	'cognome' : 'Giallini',
-	'età'     : 14
-}
+// class data
+var studenti = getClassData();
 
-studenti[1] = {
-	'nome'    : 'Giovanna',
-	'cognome' : 'Mezzogiorno',
-	'età'     : 13
-}
+// user data injection
+studenti.push(user);
 
-studenti[2] = {
-	'nome'    : 'Angela',
-	'cognome' : 'Finocchiaro',
-	'età'     : 13
-}
+// class display
+classDisplay(studenti);
 
-studenti.push(studente);
-
-$('.list').append('<tr><td></td><td>nome</td><td>cognome</td>');
-for (var i=0; i<studenti.length; i++) {
-	$('.list').append('<tr><td>studente #'+(i+1)+'</td><td>'+studenti[i]['nome']+'</td><td>'+studenti[i]['cognome']+'</td>');
-}
-
-$('button').click(function() {
-	alert('qua!');
-});
-
-
-
-
-
-
-
-
-
+// button functions
+$('#usr_add_btn').click(function()   { $('.form_box').fadeIn(200);  });
+$('#usr_erase_btn').click(function() { $('.form_box').fadeOut(200); });
+$('#usr_in_btn').click(function()    { addStudent(studenti);        });
 
 
 // *********************** doc ready end ***
@@ -62,4 +35,97 @@ $('button').click(function() {
 //###################################################### 
 // FUNCTIONS
 
+function addStudent(_studenti) {
 
+	// form data retrieving 
+	var usrName    = $('#usr_name').val();
+	var usrSurname = $('#usr_surname').val();
+	var usrAge     = parseInt($('#usr_age').val());
+
+	// consistency check
+	if ( usrName == '' || usrSurname == '' || isNaN(usrAge)) {
+		$('.msg').html('Dati non corretti');
+		$('.msg_box').fadeIn(200, function() {
+			setTimeout(function() {
+				$('.msg_box').fadeOut(200);
+			}, 1000);
+		});
+	} else {
+
+		// new student creation
+		var newStd = {
+			'nome'    : usrName,
+			'cognome' : usrSurname,
+			'età'     : usrAge
+		};
+		
+		// new student injection 
+		_studenti.push(newStd);
+
+		// class update & display
+		classDisplay(_studenti);
+		$('.form_box').fadeOut(200);
+
+		// form clearing
+		$('#usr_name').val('');
+		$('#usr_surname').val('');
+		$('#usr_age').val('');
+
+	}
+
+}
+
+function usrDisplay(_user) {
+
+	for (var key in _user) {
+		$('.user').append('<tr><td class="hl1">'+key+'</td><td class="hl2">'+_user[key]+'</td></tr>');
+	}
+
+}
+
+function classDisplay(_studenti) {
+
+	$('.list').html('<tr><td></td><td class="hl1">nome</td><td class="hl1">cognome</td>');
+	for (var i=0; i<_studenti.length; i++) {
+		$('.list').append('<tr><td class="hl1">studente #'+(i+1)+'</td><td class="hl2">'+_studenti[i]['nome']+'</td><td class="hl2">'+_studenti[i]['cognome']+'</td>');
+	}
+	
+}
+
+function getUsrData() {
+
+	var usr = {
+		'nome'    : 'Pierfrancesco',
+		'cognome' : 'Favino',
+		'età'     : 14
+	}
+	return usr; 
+
+}
+
+function getClassData() {
+
+	var list = [
+		{	'nome'    : 'Marco',
+			'cognome' : 'Giallini',
+			'età'     : 17
+		},
+		{	'nome'    : 'Giovanna',
+			'cognome' : 'Mezzogiorno',
+			'età'     : 13
+		},
+		{	'nome'    : 'Angela',
+			'cognome' : 'Finocchiaro',
+			'età'     : 13
+		}
+	];
+	return list;
+
+}
+
+function displayInit() {
+
+	$('.form_box').hide(200);
+	$('.msg_box').hide(200);
+
+};
