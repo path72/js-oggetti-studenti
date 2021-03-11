@@ -43,7 +43,7 @@ function formAddStudentTo(_class) {
 	var usrAge     = parseInt($('#usr_age').val());
 
 	// consistency check
-	if ( usrName == '' || usrSurname == '' || isNaN(usrAge)) {
+	if (usrName == '' || usrSurname == '' || isNaN(usrAge) || usrAge <= 0) {
 
 		$('.msg').html('Dati non corretti');
 		$('.msg_box').fadeIn(200, function() {
@@ -54,6 +54,10 @@ function formAddStudentTo(_class) {
 
 	// new student management
 	} else {
+
+		// new student capitalizing name/surname
+		usrName    = usrName[0].toUpperCase()    + usrName.substring(1).toLowerCase();
+		usrSurname = usrSurname[0].toUpperCase() + usrSurname.substring(1).toLowerCase();
 
 		// new student creation
 		var newStd = {
